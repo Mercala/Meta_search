@@ -5,9 +5,7 @@ from bs4 import BeautifulSoup
 import urllib.parse
 import requests
 import datetime
-from annotated_text import annotated_text
 import re
-from concurrent.futures import ThreadPoolExecutor
 from keywords import fraud, pep, terror
 import tag
 
