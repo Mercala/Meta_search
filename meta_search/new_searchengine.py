@@ -143,7 +143,7 @@ def search_cn(search_term):
             hrefs = [f"https://caribischnetwerk.ntr.nl/page/{page}/?s={params['s']}" for page in range(1, last_page + 1)]
             for href in hrefs:
                 response = requests.get(href, headers=HEADERS)
-                soup = BeautifulSoup(response.content, 'lxml')
+                soup = BeautifulSoup(response.content, 'html.parser')
                 for article in soup.find('main').findAll('article'):
                     if article.find('h2').find('a'):
                         lst.append(('CN', f"{article.find('h2').a['href']}"))
