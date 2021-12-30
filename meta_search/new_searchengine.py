@@ -98,7 +98,7 @@ def get_serp_yahoo(search_term):
     for i in range(0, 7*4, 7):
 
         response = requests.get(f'https://search.yahoo.com/search?q={search}&b={i}', headers=HEADERS)
-        soup = BeautifulSoup(response.content, 'lxml')
+        soup = BeautifulSoup(response.content, 'html.parser')
 
         h3s = soup.findAll('h3')
 
@@ -122,7 +122,7 @@ def search_cn(search_term):
     response = requests.get(url, headers=HEADERS, params=params)
 
     if response.status_code == 200:
-        soup = BeautifulSoup(response.content, 'lxml')
+        soup = BeautifulSoup(response.content, 'html.parser')
 
         lst = []
         pagination = soup.find('ul', class_='pagination')
@@ -170,7 +170,7 @@ def search_ad(search_term):
 
     url = 'https://antilliaansdagblad.com/component/search/'
     response = requests.get(url, headers=HEADERS, params=params)
-    soup = BeautifulSoup(response.content, 'lxml')
+    soup = BeautifulSoup(response.content, 'html.parser')
 
     if soup.find('div', class_="searchintro").get_text(strip=True) != 'Totaal:0resultaten gevonden.':
         dts = soup.find('dl').findAll('dt')
@@ -194,7 +194,7 @@ def search_dclp(search_term):
     base_url = 'http://www.dutchcaribbeanlegalportal.com/'
 
     response = requests.get(url, params=params, headers=HEADERS)
-    soup = BeautifulSoup(response.text, 'lxml')
+    soup = BeautifulSoup(response.text, 'html.parser')
 
     dts = soup.findAll('dt', class_="result-title")
 
