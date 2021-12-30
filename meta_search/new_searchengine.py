@@ -50,7 +50,7 @@ def get_serp_google(search_term):
         search = url + urllib.parse.quote_plus(search_term) + f'&start={i}'
 
         response = requests.get(search, headers=HEADERS)
-        soup = BeautifulSoup(response.text, 'lxml')
+        soup = BeautifulSoup(response.text, 'html.parser')
 
         # Catch no hits page
         p = soup.find('p', {'aria-level':"3"})
@@ -70,7 +70,7 @@ def get_serp_bing(search_term):
     for i in range(0, 40, 10):
 
         response = requests.get(f'https://www.bing.com/search?q={search}&first={i}', headers=HEADERS)
-        soup = BeautifulSoup(response.content, 'lxml')
+        soup = BeautifulSoup(response.content, 'html.parser')
 
         lis = soup.findAll('li', class_="b_algo")
 
@@ -83,7 +83,7 @@ def get_serp_duckduckgo(search_term):
     url = 'https://lite.duckduckgo.com/lite/&q=' + search
 
     response = requests.get(url, headers=HEADERS)
-    soup = BeautifulSoup(response.content, 'lxml')
+    soup = BeautifulSoup(response.content, 'html.parser')
 
     tds = soup.findAll('td', valign='top')
 
