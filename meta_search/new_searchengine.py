@@ -77,6 +77,7 @@ def get_serp_bing(search_term):
     return [('Bing', li.a['href']) for li in lis if li.p.span]
 
 
+@st.cache
 def get_serp_duckduckgo(search_term):
 
     search = urllib.parse.quote_plus(search_term)
@@ -90,6 +91,7 @@ def get_serp_duckduckgo(search_term):
     return [('Duckduckgo', td.find_next_sibling().a['href']) for td in tds]
 
 
+@st.cache
 def get_serp_yahoo(search_term):
 
     search = urllib.parse.quote(search_term)
@@ -111,6 +113,7 @@ def get_serp_yahoo(search_term):
     return lst
 
 
+@st.cache
 def search_cn(search_term):
 
     params = {
@@ -159,6 +162,7 @@ def search_cn(search_term):
             return lst
 
 
+@st.cache
 def search_ad(search_term):
 
     params = {
@@ -181,6 +185,7 @@ def search_ad(search_term):
         return []
 
 
+@st.cache
 def search_dclp(search_term):
 
     global HEADERS
@@ -276,10 +281,11 @@ if __name__ == '__main__':
         dclp = search_dclp(user_input)
 
         all_search = list(set(google + bing + duck + yahoo + cn + ad + dclp))
-        # all_search = list(set(dclp))
+        count = 0
         for index, url in enumerate(all_search):
             paragraph = get_paragraphs(url[1])
             if paragraph:
+                count += 1
                 for p in paragraph:
                     result, dct = tag.tag(p, user_input, dct)
                     st.markdown(result, unsafe_allow_html=True)
@@ -288,11 +294,15 @@ if __name__ == '__main__':
 
             my_bar.progress((index + 1)/ len(all_search))
 
+        if count > 0:
+            col1.write('Number of keywords related to:')
+            if dct:
+                col2.metric('FRAUD', f"#{dct['fraud_count']}")
+                # if pep_count:
+                col3.metric('PEP', f"#{dct['pep_count']}")
+                # if terror_count:
+                col4.metric('TERROR', f"#{dct['terror_count']}")
 
-        col1.write('Number of keywords related to:')
-        if dct:
-            col2.metric('FRAUD', f"#{dct['fraud_count']}")
-            # if pep_count:
-            col3.metric('PEP', f"#{dct['pep_count']}")
-            # if terror_count:
-            col4.metric('TERROR', f"#{dct['terror_count']}")
+        else:
+            st.write(' ')
+            st.write(f"**No results** found for '***{user_input}***' on {today.strftime('%B %-d')}, {today.strftime('%Y')}")
