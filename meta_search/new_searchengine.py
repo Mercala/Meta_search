@@ -57,7 +57,6 @@ def get_serp_google(search_term):
         if not p:
 
             divs = soup.findAll('div', class_="MjjYud")
-            st.write(divs)
 
     return [('Google', div.a['href']) for div in divs]
 
