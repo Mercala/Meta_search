@@ -58,7 +58,7 @@ def get_serp_google(search_term):
 
             divs = soup.findAll('div', class_="MjjYud")
 
-    return [('Google', div.a['href']) for div in divs]
+    return [('Google', div.a['href']) for div in divs if div.a]
 
 
 @st.cache
