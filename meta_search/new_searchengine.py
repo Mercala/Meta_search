@@ -50,6 +50,7 @@ def get_serp_google(search_term):
         search = url + urllib.parse.quote_plus(search_term) + f'&start={i}'
 
         response = requests.get(search, headers=HEADERS)
+        st.write(response.url)
         soup = BeautifulSoup(response.text, 'html.parser')
 
         # Catch no hits page
