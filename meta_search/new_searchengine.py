@@ -50,14 +50,14 @@ def get_serp_google(search_term):
         search = url + urllib.parse.quote_plus(search_term) + f'&start={i}'
 
         response = requests.get(search, headers=HEADERS)
-        st.write(response.url)
         soup = BeautifulSoup(response.text, 'html.parser')
 
         # Catch no hits page
         p = soup.find('p', {'aria-level':"3"})
         if not p:
 
-            divs = soup.findAll('div', class_="yuRUbf")
+            divs = soup.findAll('div', class_="MjjYud")
+            st.write(divs)
 
     return [('Google', div.a['href']) for div in divs]
 
