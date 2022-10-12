@@ -56,7 +56,7 @@ def get_serp_google(search_term):
         p = soup.find('p', {'aria-level':"3"})
         if not p:
 
-            divs = soup.findAll('div', class_="MjjYud")
+            divs = soup.findAll('div', class_="yuRUbf"")
 
     return [('Google', div.a['href']) for div in divs]
 
