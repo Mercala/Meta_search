@@ -257,7 +257,7 @@ if __name__ == '__main__':
     }
 
     col1, col2, col3 = st.columns([1, 1, 10])
-    col1.markdown(f"<div><img style='width:150px' src={img_digital_forensics}></div>", unsafe_allow_html=True)
+    col1.markdown(f"<div><img style='width:150px' src={img_sparta}></div>", unsafe_allow_html=True)
     col3.subheader('COMPLIANCE ARUBA')
     col3.write('Forensic Meta Search')
     # col1, col2, col3, col4 = st.columns([6, 1, 1, 1])
